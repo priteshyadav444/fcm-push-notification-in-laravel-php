@@ -20,7 +20,7 @@ First, install the necessary package to interact with Firebase:
 ```bash
 composer require google/apiclient
 ```
-
+If you're facing a timeout error then either increase the timeout for composer by adding the env flag as COMPOSER_PROCESS_TIMEOUT=600 composer install or you can put this in the config section of the composer schema: https://packagist.org/packages/google/apiclient
 ---
 
 ## Step 2: Generate Service Account JSON File
