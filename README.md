@@ -1,5 +1,5 @@
 
-# Firebase Push Notifications in Laravel
+# Firebase Push Notifications in Laravel ( Php ) 
 
 This guide explains how to integrate Firebase Cloud Messaging (FCM) to send push notifications in a Laravel project. We'll use the Firebase API to send push notifications to mobile devices, generate access tokens, and cache them for efficiency.
 
@@ -15,18 +15,19 @@ This guide explains how to integrate Firebase Cloud Messaging (FCM) to send push
 
 ## Step 1: Install Required Packages
 
-First, install the necessary package to interact with Firebase:
+First, install the necessary package to interact with Firebase: (https://packagist.org/packages/google/apiclient)
 
 ```bash
 composer require google/apiclient
 ```
-If you're facing a timeout error then either increase the timeout for composer by adding the env flag as COMPOSER_PROCESS_TIMEOUT=600 composer install or you can put this in the config section of the composer schema: https://packagist.org/packages/google/apiclient
+- If you're facing a timeout error then either increase the timeout for composer by adding the env flag as COMPOSER_PROCESS_TIMEOUT=600 composer install or you can put this in the config section of the composer schema: 
+
 ---
 
 ## Step 2: Generate Service Account JSON File
 
 1. Go to [Firebase Console](https://console.firebase.google.com/).
-2. Select your project and navigate to **Project Settings > Service Accounts**.
+2. Select your project and navigate to **Project Settings > Service Accounts**. ( create if don't have project in firebase.
 3. Click on **Generate New Private Key** and download the JSON file.
 4. Move the `service_account.json` file to a secure location in your Laravel project, e.g., `storage/app/private/service_account.json`.
 
@@ -44,6 +45,10 @@ If you're facing a timeout error then either increase the timeout for composer b
 
 In your `config/custom.php` (create this file if it doesn't exist), add the following configuration:
 
+Note: This step is optional. You can directly use the FCM endpoint in the API, but it's a good practice to store it in the configuration file.
+
+
+
 ```php
 <?php
 return [
@@ -51,7 +56,7 @@ return [
 ];
 ```
 
-Replace `YOUR_PROJECT_ID` with the actual Project ID from your Firebase project.
+Replace `YOUR_PROJECT_ID` with the actual Project ID from your Firebase project.  
 
 ---
 
@@ -162,7 +167,7 @@ class FirebaseNotificationService
 ```
 
 ### Code Breakdown:
-- **generateAccessToken()**: This function retrieves the access token from Google. It checks if the token is already cached and if not, it generates a new one and stores it in the cache for 55 minutes.
+- **generateAccessToken()**: This function retrieves the access token from Google. It checks if the token is already cached and if not, it generates a new one and stores it in the cache for 55 minutes. ( cache steps is optional set cache expire time as per time provided in official firebase documentation.
 - **sendPushNotificationSync()**: This function sends push notifications to the user’s devices using the Firebase token and notification payload (title and body).
 
 ---
@@ -234,10 +239,10 @@ This ensures that API calls to Google are minimized.
 
 ---
 
-## Conclusion
+## Note:
 
-With these steps, you can now successfully integrate Firebase Cloud Messaging into your Laravel project. The cached access token ensures optimized performance, and the push notifications are sent efficiently to user devices.
-
-Feel free to adapt and extend this setup based on your project’s needs!
+1) All the data in the payload should be string only.
+2) The token will be valid for 1 hour, so we can cache the token to avoid token generation api calls.  (Check official documentation )
+3) store public key files in safe place in your project so it is not accessible publicly (recommendation )
 
 --- 
