@@ -169,6 +169,8 @@ class FirebaseNotificationService
 ### Code Breakdown:
 - **generateAccessToken()**: This function retrieves the access token from Google. It checks if the token is already cached and if not, it generates a new one and stores it in the cache for 55 minutes. ( cache steps is optional set cache expire time as per time provided in official firebase documentation.
 - **sendPushNotificationSync()**: This function sends push notifications to the user’s devices using the Firebase token and notification payload (title and body).
+- Note: Here is the official documentation for sending push notifications in various technologies. It also includes details on migrating from the deprecated old methods to the new ones. 
+ https://firebase.google.com/docs/cloud-messaging/migrate-v1
 
 ---
 
